@@ -21,6 +21,7 @@
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvUserName"
         android:layout_alignBottom="@+id/tvUserName"
         android:layout_alignParentTop="true"
         android:layout_marginStart="3dp"
@@ -31,7 +32,7 @@
 
     <TextView
         android:id="@+id/tvTweetText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvScreenName"
         android:layout_marginStart="5dp"
@@ -39,6 +40,8 @@
         android:layout_toEndOf="@+id/ivProfileImage"
         android:autoLink="all"
         android:linksClickable="true"
+        android:maxLines="2"
+        android:ellipsize="end"
         tools:text="@string/tweet_message" />
 
     <TextView
@@ -46,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:textStyle="bold"
         android:layout_toEndOf="@id/ivProfileImage"
         tools:text="User Name" />
 
@@ -53,9 +57,11 @@
         android:id="@+id/tvRelativeTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvScreenName"
         android:layout_alignBottom="@+id/tvScreenName"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:textStyle="italic"
         android:layout_marginEnd="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"

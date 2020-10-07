@@ -23,6 +23,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     private TextView tvUserName;
     private TextView tvTweetText;
     private TextView tvRelativeTime;
+    private boolean isTweetTextClicked = false;
 
     public ViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -34,6 +35,19 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         tvUserName = itemView.findViewById(R.id.tvUserName);
         tvTweetText = itemView.findViewById(R.id.tvTweetText);
         tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
+
+        tvTweetText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isTweetTextClicked) {
+                    tvTweetText.setMaxLines(2);
+                    isTweetTextClicked = false;
+                } else {
+                    tvTweetText.setMaxLines(Integer.MAX_VALUE);
+                    isTweetTextClicked = true;
+                }
+            }
+        });
     }
 
     public void bind(Tweet tweet) {
