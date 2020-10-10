@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Twitter App Client</string>
     <string name="login_label">Log in</string>
     <string name="intent_scheme">oauth</string>
@@ -10,4 +9,7 @@
     <string name="screen_name">Screen Name</string>
     <string name="at">\@</string>
     <string name="relative_timestamp">Relative Timestamp</string>
+    <string name="user_name">User Name</string>
+    <string name="tweet">tweet</string>
+    <string name="image_preview">Image Preview</string>
 </resources>

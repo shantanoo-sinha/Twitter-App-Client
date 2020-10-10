@@ -2,12 +2,14 @@ package com.shantanoo.twitter.appclient.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.Objects;
 
 /**
  * Created by Shantanoo on 10/5/2020.
  */
+@Parcel
 public class User {
 
     private long id;
