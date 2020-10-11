@@ -5,7 +5,6 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.shantanoo.twitter.appclient.models.SampleModel;
 import com.shantanoo.twitter.appclient.models.Tweet;
 import com.shantanoo.twitter.appclient.models.TweetWithUser;
 import com.shantanoo.twitter.appclient.models.User;
@@ -18,7 +17,7 @@ import java.util.List;
 @Dao
 public interface TweetDao {
     @Query("SELECT Tweet.text as tweet_text, Tweet.createdAt as tweet_createdAt, Tweet.id as tweet_id, User.* " +
-            "FROM Tweet INNER JOIN USER ON Tweet.userId = User.id ORDER BY createdAt DESC LIMIT 5")
+            "FROM Tweet INNER JOIN User ON Tweet.userId = User.id ORDER BY Tweet.createdAt DESC LIMIT 5")
     List<TweetWithUser> recentItems();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

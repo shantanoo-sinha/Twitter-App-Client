@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,6 +51,9 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+        client = TwitterRestApplication.getRestClient(this);
+        tweetDao = ((TwitterRestApplication) getApplicationContext()).getMyDatabase().tweetDao();
+
         tweets = new ArrayList<>();
 
         recyclerView = findViewById(R.id.rvTweets);
@@ -62,9 +63,6 @@ public class TimelineActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(), R.drawable.recycler_view_divider)));
-
-        client = TwitterRestApplication.getRestClient(this);
-        tweetDao = ((TwitterRestApplication) getApplicationContext()).getMyDatabase().tweetDao();
 
         swipeContainer = findViewById(R.id.swipeContainer);
         // Configure the refreshing colors
@@ -138,7 +136,6 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "populateHomeTimeline => onFailure: " + response, throwable);
-                Toast.makeText(getApplicationContext(), "Failed to populate timeline", Toast.LENGTH_SHORT).show();;
             }
         });
     }
@@ -179,7 +176,6 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.compose:
-                Toast.makeText(this, "Compose", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, ComposeActivity.class);
                 startActivityForResult(intent, COMPOSE_ACTIVITY_REQUEST_CODE);
                 return true;
@@ -192,7 +188,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == COMPOSE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == COMPOSE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra(getString(R.string.tweet)));
             tweets.add(0, tweet);
             adapter.notifyItemInserted(0);
