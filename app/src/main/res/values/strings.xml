@@ -11,5 +11,7 @@
     <string name="relative_timestamp">Relative Timestamp</string>
     <string name="user_name">User Name</string>
     <string name="tweet">tweet</string>
+    <string name="Tweet">Tweet</string>
     <string name="image_preview">Image Preview</string>
+    <string name="compose_hint">What\'s happening?</string>
 </resources>

@@ -1,10 +1,14 @@
 package com.shantanoo.twitter.appclient;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -15,20 +19,27 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.shantanoo.twitter.appclient.adapters.TweetsAdapter;
 import com.shantanoo.twitter.appclient.models.Tweet;
+import com.shantanoo.twitter.appclient.models.TweetWithUser;
+import com.shantanoo.twitter.appclient.models.User;
 import com.shantanoo.twitter.appclient.recyclerview.EndlessRecyclerViewScrollListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.TweetDao;
 import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
 
     private static final String TAG = "TimelineActivity";
 
+    private static final int COMPOSE_ACTIVITY_REQUEST_CODE = 20;
+
+    private TweetDao tweetDao;
     private List<Tweet> tweets;
     private TweetsAdapter adapter;
     private TwitterRestClient client;
@@ -53,6 +64,7 @@ public class TimelineActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(), R.drawable.recycler_view_divider)));
 
         client = TwitterRestApplication.getRestClient(this);
+        tweetDao = ((TwitterRestApplication) getApplicationContext()).getMyDatabase().tweetDao();
 
         swipeContainer = findViewById(R.id.swipeContainer);
         // Configure the refreshing colors
@@ -81,6 +93,17 @@ public class TimelineActivity extends AppCompatActivity {
         // Adds the scroll listener to RecyclerView
         recyclerView.addOnScrollListener(scrollListener);
 
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "Showing data from database: ");
+                List<TweetWithUser> tweetWithUsers = tweetDao.recentItems();
+                List<Tweet> tweetsFromDB = TweetWithUser.getTweetList(tweetWithUsers);
+                adapter.clear();
+                adapter.addAll(tweetsFromDB);
+            }
+        });
+
         populateHomeTimeline();
     }
 
@@ -91,11 +114,22 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.d(TAG, "populateHomeTimeline => onSuccess: " + json.toString());
                 JSONArray jsonArray = json.jsonArray;
                 try {
+                    final List<Tweet> tweetsFromNetwork = Tweet.fromJsonArray(jsonArray);
                     adapter.clear();
-                    adapter.addAll(Tweet.fromJsonArray(jsonArray));
+                    adapter.addAll(tweetsFromNetwork);
 
                     // call setRefreshing(false) to signal refresh has finished
                     swipeContainer.setRefreshing(false);
+
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "Saving data into database: ");
+                            List<User> usersFromNetwork = User.fromJsonTweetArray(tweetsFromNetwork);
+                            tweetDao.insertModel(usersFromNetwork.toArray(new User[0]));
+                            tweetDao.insertModel(tweetsFromNetwork.toArray(new Tweet[0]));
+                        }
+                    });
                 } catch (JSONException e) {
                     Log.e(TAG, "populateHomeTimeline => onSuccess: JSON Exception", e);
                 }
@@ -136,12 +170,34 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.compose:
+                Toast.makeText(this, "Compose", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, ComposeActivity.class);
+                startActivityForResult(intent, COMPOSE_ACTIVITY_REQUEST_CODE);
+                return true;
             case android.R.id.home:
                 supportFinishAfterTransition();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == COMPOSE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra(getString(R.string.tweet)));
+            tweets.add(0, tweet);
+            adapter.notifyItemInserted(0);
+            recyclerView.smoothScrollToPosition(0);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
