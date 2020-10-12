@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shantanoo.twitter.appclient.activities.ComposeActivity;
 import com.shantanoo.twitter.appclient.adapters.TweetsAdapter;
 import com.shantanoo.twitter.appclient.models.Tweet;
@@ -31,7 +33,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.TweetDao;
+import db.TweetDao;
 import okhttp3.Headers;
 
 public class TimelineActivity extends AppCompatActivity {
@@ -45,6 +47,7 @@ public class TimelineActivity extends AppCompatActivity {
     private TweetsAdapter adapter;
     private TwitterRestClient client;
     private RecyclerView recyclerView;
+    private FloatingActionButton fabCompose;
     private SwipeRefreshLayout swipeContainer;
     private LinearLayoutManager linearLayoutManager;
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -74,6 +77,15 @@ public class TimelineActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(getApplicationContext(), R.drawable.recycler_view_divider)));
+
+        fabCompose = findViewById(R.id.fabCompose);
+        fabCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+                startActivityForResult(intent, COMPOSE_ACTIVITY_REQUEST_CODE);
+            }
+        });
 
         swipeContainer = findViewById(R.id.swipeContainer);
         // Configure the refreshing colors

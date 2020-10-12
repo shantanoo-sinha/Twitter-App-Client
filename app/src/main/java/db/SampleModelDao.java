@@ -1,9 +1,11 @@
-package com.shantanoo.twitter.appclient.models;
+package db;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.shantanoo.twitter.appclient.models.SampleModel;
 
 import java.util.List;
 

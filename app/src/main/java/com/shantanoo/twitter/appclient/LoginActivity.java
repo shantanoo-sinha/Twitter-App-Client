@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 import com.shantanoo.twitter.appclient.models.SampleModel;
-import com.shantanoo.twitter.appclient.models.SampleModelDao;
+import db.SampleModelDao;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterRestClient> {
 

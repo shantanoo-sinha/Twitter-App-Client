@@ -16,40 +16,39 @@ import org.json.JSONObject;
 @Entity
 public class SampleModel {
 
-	@PrimaryKey(autoGenerate = true)
-	Long id;
+    @PrimaryKey(autoGenerate = true)
+    public Long id;
 
-	// Define table fields
-	@ColumnInfo
-	private String name;
+    // Define table fields
+    @ColumnInfo
+    public String name;
 
-	public SampleModel() {
-		super();
-	}
+    public SampleModel() {
+        super();
+    }
 
-	// Parse model from JSON
-	public SampleModel(JSONObject object){
-		super();
+    // Parse model from JSON
+    public SampleModel(JSONObject object) {
+        super();
 
-		try {
-			this.name = object.getString("title");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            this.name = object.getString("title");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
-	// Getters
-	public String getName() {
-		return name;
-	}
+    // Getters
+    public String getName() {
+        return name;
+    }
 
-	// Setters
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
+    // Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

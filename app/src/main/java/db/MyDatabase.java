@@ -1,14 +1,11 @@
-package com.shantanoo.twitter.appclient;
+package db;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import com.shantanoo.twitter.appclient.models.SampleModel;
-import com.shantanoo.twitter.appclient.models.SampleModelDao;
 import com.shantanoo.twitter.appclient.models.Tweet;
 import com.shantanoo.twitter.appclient.models.User;
-
-import dao.TweetDao;
 
 @Database(entities={SampleModel.class, Tweet.class, User.class}, version=2)
 public abstract class MyDatabase extends RoomDatabase {

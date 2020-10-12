@@ -123,11 +123,11 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.userId = tweet.user.getId();
-        /*try {
+        try {
             tweet.mediaUrl = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url");
         } catch (JSONException e) {
             Log.e(TAG, "fromJson: Failed to parse Media URL", e);
-        }*/
+        }
 
 //        Log.d(TAG, "Tweet: " + tweet.toString());
         return tweet;
