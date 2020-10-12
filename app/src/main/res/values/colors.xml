@@ -10,5 +10,5 @@
     <color name="light_red">#DB9596</color>
     <color name="colorPrimary">#55ACEE</color>
     <color name="colorPrimaryDark">#0084B4</color>
-    <color name="colorAccent">#55ACEE</color>
+    <color name="colorAccent">#ff00ddff</color>
 </resources>

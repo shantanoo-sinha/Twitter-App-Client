@@ -9,16 +9,19 @@ import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.shantanoo.twitter.appclient.activities.ComposeActivity;
 import com.shantanoo.twitter.appclient.adapters.TweetsAdapter;
 import com.shantanoo.twitter.appclient.models.Tweet;
 import com.shantanoo.twitter.appclient.models.TweetWithUser;
 import com.shantanoo.twitter.appclient.models.User;
+import com.shantanoo.twitter.appclient.recyclerview.DividerItemDecoration;
 import com.shantanoo.twitter.appclient.recyclerview.EndlessRecyclerViewScrollListener;
 
 import org.json.JSONArray;
@@ -50,6 +53,14 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Display icon in the toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.vector_twitter_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         client = TwitterRestApplication.getRestClient(this);
         tweetDao = ((TwitterRestApplication) getApplicationContext()).getMyDatabase().tweetDao();

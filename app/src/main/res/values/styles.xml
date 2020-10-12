@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -8,6 +8,9 @@
         -->
         <item name="actionMenuTextColor">@color/grey</item>
         <item name="android:actionMenuTextColor">@color/grey</item>
+        <item name="colorControlNormal">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
     </style>
 
     <!-- Application theme. -->
@@ -19,4 +22,11 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="counterText">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="counterOverride">
+        <item name="android:textColor">#ff0000</item>
+    </style>
 </resources>

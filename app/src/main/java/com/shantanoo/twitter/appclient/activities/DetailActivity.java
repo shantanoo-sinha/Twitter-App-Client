@@ -1,4 +1,4 @@
-package com.shantanoo.twitter.appclient;
+package com.shantanoo.twitter.appclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.shantanoo.twitter.appclient.R;
 import com.shantanoo.twitter.appclient.models.Tweet;
 
 import org.parceler.Parcels;
@@ -31,6 +33,15 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Display icon in the toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.vector_twitter_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+
         ivDetailProfileImage = findViewById(R.id.ivDetailProfileImage);
         tvDetailScreenName = findViewById(R.id.tvDetailScreenName);
         tvDetailUserName = findViewById(R.id.tvDetailUserName);
@@ -42,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         tvDetailUserName.setText(tweet.getUser().getName());
         tvDetailScreenName.setText(getApplicationContext().getString(R.string.at) + tweet.getUser().getScreenName());
         tvDetailTweetText.setText(tweet.getText());
-        tvDetailRelativeTime.setText(tweet.getFormattedTimestamp());
+        tvDetailRelativeTime.setText(tweet.getFormattedTimestamp() + " ago");
 
         int radius = 30; // corner radius, higher value = more rounded
         int margin = 10; // crop margin, set to 0 for corners with no crop

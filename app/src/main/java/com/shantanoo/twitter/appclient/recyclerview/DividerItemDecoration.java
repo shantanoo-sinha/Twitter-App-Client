@@ -1,4 +1,4 @@
-package com.shantanoo.twitter.appclient;
+package com.shantanoo.twitter.appclient.recyclerview;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;

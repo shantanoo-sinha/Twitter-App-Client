@@ -14,7 +14,7 @@ import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.shantanoo.twitter.appclient.DetailActivity;
+import com.shantanoo.twitter.appclient.activities.DetailActivity;
 import com.shantanoo.twitter.appclient.R;
 import com.shantanoo.twitter.appclient.models.Tweet;
 
