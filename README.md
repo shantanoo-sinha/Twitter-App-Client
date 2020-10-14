@@ -31,7 +31,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![hippo](https://i.imgur.com/6wOGeiK.gifv)
+![Walk-through](https://i.imgur.com/6wOGeiK.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
